@@ -24,6 +24,11 @@ public class EmailAuthenticator implements Authenticator {
 
 		int length = Integer.parseInt(config.getConfig().get("length"));
 		int ttl = Integer.parseInt(config.getConfig().get("ttl"));
+		String subject = config.getConfig().get("subject");
+
+		if(subject == null || subject.trim().isEmpty()) {
+			subject = "Summit 2FA Code";
+		}
 
 		String code = RandomString.randomCode(length);
 		AuthenticationSessionModel authSession = context.getAuthenticationSession();
@@ -40,7 +45,7 @@ public class EmailAuthenticator implements Authenticator {
 			senderProvider.send(
 				        session.getContext().getRealm().getSmtpConfig(),
 				        user,
-				        "2FA Authentication",
+						subject,
 				        emailText,
 				        emailText
 				);
