@@ -1,1 +1,1 @@
-com.github.patsbin.keycloak.emailauthenticator.EmailAuthenticatorFactory
+com.github.patsbin.keycloak.authenticator.EmailAuthenticatorFactory

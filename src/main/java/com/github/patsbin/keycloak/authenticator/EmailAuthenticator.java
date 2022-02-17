@@ -1,16 +1,23 @@
-package com.github.patsbin.keycloak.emailauthenticator;
+package com.github.patsbin.keycloak.authenticator;
 
 import org.keycloak.authentication.AuthenticationFlowContext;
 import org.keycloak.authentication.AuthenticationFlowError;
 import org.keycloak.authentication.Authenticator;
 import org.keycloak.common.util.RandomString;
-import org.keycloak.email.DefaultEmailSenderProvider;
-import org.keycloak.models.*;
+import org.keycloak.models.AuthenticationExecutionModel;
+import org.keycloak.models.AuthenticatorConfigModel;
+import org.keycloak.models.KeycloakSession;
+import org.keycloak.models.RealmModel;
+import org.keycloak.models.UserModel;
 import org.keycloak.sessions.AuthenticationSessionModel;
 import org.keycloak.theme.Theme;
 
 import javax.ws.rs.core.Response;
 import java.util.Locale;
+
+
+// email provider from keycloak
+import org.keycloak.email.DefaultEmailSenderProvider;
 
 public class EmailAuthenticator implements Authenticator {
 
@@ -43,12 +50,12 @@ public class EmailAuthenticator implements Authenticator {
 
 			DefaultEmailSenderProvider senderProvider = new DefaultEmailSenderProvider(session);
 			senderProvider.send(
-				        session.getContext().getRealm().getSmtpConfig(),
-				        user,
-						subject,
-				        emailText,
-				        emailText
-				);
+				session.getContext().getRealm().getSmtpConfig(),
+				user,
+				subject,
+				emailText,
+				emailText
+			);
 
 
 			context.challenge(context.form().setAttribute("realm", context.getRealm()).createForm(TPL_CODE));
